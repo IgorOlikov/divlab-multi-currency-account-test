@@ -6,13 +6,15 @@ namespace App\Application\Command\Account;
 
 
 
-readonly class CreateAccountCommand
+use App\Application\Command\CommandInterface;
+
+readonly class CreateAccountCommand implements CommandInterface
 {
 
     public function __construct(
         private string $userId,
         private string $bankId,
-        private string $currencyId,
+        private string $primeCurrencyId,
     )
     {}
 
@@ -26,9 +28,9 @@ readonly class CreateAccountCommand
         return $this->bankId;
     }
 
-    public function getCurrencyId(): string
+    public function getPrimeCurrencyId(): string
     {
-        return $this->currencyId;
+        return $this->primeCurrencyId;
     }
 
 

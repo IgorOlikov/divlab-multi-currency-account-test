@@ -2,24 +2,33 @@
 
 namespace App\Application\Handler\Account;
 
+
+use App\Application\Command\Account\CreateAccountCommand;
+use App\Application\Command\CommandInterface;
 use App\Application\Handler\CommandHandlerInterface;
+use App\Application\Service\AccountService;
 
-class CreateAccountCommandHandler implements CommandHandlerInterface
+
+
+readonly class CreateAccountCommandHandler implements CommandHandlerInterface
 {
-    private AccountService $accountService;
 
-    public function __construct(AccountService $accountService)
-    {
-        $this->accountService = $accountService;
-    }
+    public function __construct(
+        private AccountService $accountService
+    )
+    {}
 
-    public function handle(CreateAccountCommand $command)
+
+    /**
+     * @param CreateAccountCommand $command
+     * @return mixed
+     */
+    public function handle(CommandInterface $command): mixed
     {
         return $this->accountService->createAccount(
             $command->getUserId(),
             $command->getBankId(),
-            $command->getCurrency(),
-            $command->getBalance()
+            $command->getPrimeCurrencyId(),
         );
     }
 }
