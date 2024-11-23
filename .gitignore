@@ -1,4 +1,5 @@
 .idea
 .git
 
-docker/postgresql/data
+docker/postgresql/
+docker/dev/nginx/logs

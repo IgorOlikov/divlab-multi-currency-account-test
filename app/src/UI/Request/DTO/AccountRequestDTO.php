@@ -2,7 +2,7 @@
 
 namespace App\UI\Request;
 
-class AccountRequest
+class AccountRequestDTO
 {
 
 }

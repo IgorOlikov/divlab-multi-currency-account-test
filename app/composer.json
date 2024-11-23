@@ -18,6 +18,7 @@
         "symfony/monolog-bundle": "^3.10",
         "symfony/runtime": "7.1.*",
         "symfony/security-bundle": "7.1.*",
+        "symfony/uid": "7.1.*",
         "symfony/yaml": "7.1.*"
     },
     "require-dev": {
@@ -36,7 +37,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "App\\Domain\\": "src/Domain/"
         }
     },
     "autoload-dev": {

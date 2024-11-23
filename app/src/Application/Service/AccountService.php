@@ -2,7 +2,7 @@
 
 namespace App\Application\Service;
 
-class CreateAccountCommandHandler
+class AccountService
 {
 
 }
