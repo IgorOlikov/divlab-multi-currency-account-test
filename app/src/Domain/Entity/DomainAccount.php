@@ -1,14 +1,11 @@
 <?php
 
-
 namespace App\Domain\Entity;
-
-
 
 use Symfony\Component\Uid\Uuid;
 
 
-class Bank
+class DomainAccount
 {
 
     private ?Uuid $id = null;
@@ -17,5 +14,4 @@ class Bank
     {
         return $this->id;
     }
-
 }

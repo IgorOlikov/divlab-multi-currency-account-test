@@ -3,8 +3,10 @@
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
 
-use App\Domain\Entity\DoctrineBalance;
+
+use App\Domain\Entity\DomainBalance;
 use App\Domain\Repository\BalanceRepositoryInterface;
+use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineBalance;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,12 +20,12 @@ class DoctrineBalanceRepository extends ServiceEntityRepository implements Balan
         parent::__construct($registry, DoctrineBalance::class);
     }
 
-    #[\Override] public function save(DoctrineBalance $account): void
+    #[\Override] public function save(DomainBalance $account): void
     {
         // TODO: Implement save() method.
     }
 
-    #[\Override] public function findById(int $id): ?DoctrineBalance
+    #[\Override] public function findById(string $id): ?DomainBalance
     {
         // TODO: Implement findById() method.
     }

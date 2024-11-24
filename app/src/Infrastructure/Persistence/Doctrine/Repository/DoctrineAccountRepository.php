@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Infrastracture\Persistence\Doctrine\Repository;
+namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
+use App\Domain\Entity\DomainAccount;
 use App\Domain\Repository\AccountRepositoryInterface;
-use App\Domain\Entity\DoctrineAccount;
+use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineAccount;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,12 +19,12 @@ class DoctrineAccountRepository extends ServiceEntityRepository implements Accou
     }
 
 
-    #[\Override] public function save(DoctrineAccount $account): void
+    #[\Override] public function save(DomainAccount $account): void
     {
         // TODO: Implement save() method.
     }
 
-    #[\Override] public function findById(int $id): ?DoctrineAccount
+    #[\Override] public function findById(string $id): ?DomainAccount
     {
         // TODO: Implement findById() method.
     }

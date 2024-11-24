@@ -3,7 +3,7 @@
 namespace App\Domain\Entity;
 
 
-class Balance
+class DomainBalance
 {
 
 }

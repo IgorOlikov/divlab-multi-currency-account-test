@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Infrastracture\Persistence\Doctrine\Repository;
+namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
-use App\Domain\Entity\DoctrineBank;
-use App\Domain\Entity\DoctrineUser;
+
+use App\Domain\Entity\DomainUser;
 use App\Domain\Repository\UserRepositoryInterface;
+use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -35,12 +36,12 @@ class DoctrineUserRepository extends ServiceEntityRepository implements Password
         $this->getEntityManager()->flush();
     }
 
-    #[\Override] public function save(DoctrineBank $account): void
+    #[\Override] public function save(DomainUser $account): void
     {
         // TODO: Implement save() method.
     }
 
-    #[\Override] public function findById(int $id): ?DoctrineBank
+    #[\Override] public function findById(string $id): ?DomainUser
     {
         // TODO: Implement findById() method.
     }

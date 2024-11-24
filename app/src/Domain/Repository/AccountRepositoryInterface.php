@@ -2,10 +2,11 @@
 
 namespace App\Domain\Repository;
 
-use App\Domain\Entity\DoctrineAccount;
+
+use App\Domain\Entity\DomainAccount;
 
 interface AccountRepositoryInterface
 {
-    public function save(DoctrineAccount $account): void;
-    public function findById(int $id): ?DoctrineAccount;
+    public function save(DomainAccount $account): void;
+    public function findById(string $id): ?DomainAccount;
 }

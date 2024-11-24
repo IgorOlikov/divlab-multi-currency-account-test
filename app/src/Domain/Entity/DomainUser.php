@@ -4,7 +4,7 @@ namespace App\Domain\Entity;
 
 
 
-class User
+class DomainUser
 {
 
     private ?Uuid $id = null;

@@ -2,8 +2,10 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
-use App\Domain\Entity\DoctrineBank;
+
+use App\Domain\Entity\DomainBank;
 use App\Domain\Repository\BankRepositoryInterface;
+use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineBank;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,12 +19,12 @@ class DoctrineBankRepository extends ServiceEntityRepository implements BankRepo
         parent::__construct($registry, DoctrineBank::class);
     }
 
-    #[\Override] public function save(DoctrineBank $account): void
+    #[\Override] public function save(DomainBank $account): void
     {
         // TODO: Implement save() method.
     }
 
-    #[\Override] public function findById(int $id): ?DoctrineBank
+    #[\Override] public function findById(string $id): ?DomainBank
     {
         // TODO: Implement findById() method.
     }

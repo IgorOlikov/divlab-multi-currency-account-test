@@ -2,10 +2,10 @@
 
 namespace App\Domain\Repository;
 
-use App\Domain\Entity\DoctrineBalance;
+use App\Domain\Entity\DomainBalance;
 
 interface BalanceRepositoryInterface
 {
-    public function save(DoctrineBalance $account): void;
-    public function findById(int $id): ?DoctrineBalance;
+    public function save(DomainBalance $account): void;
+    public function findById(string $id): ?DomainBalance;
 }

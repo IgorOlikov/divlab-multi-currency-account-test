@@ -19,4 +19,7 @@ test-create-test-database:
 test-create-test-schema:
 	docker compose run --rm cli bin/console doctrine:schema:create --env=test --no-interaction
 
+cache-clear:
+	docker compose run --rm cli bin/console cache:clear
+
 
