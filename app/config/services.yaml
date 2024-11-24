@@ -19,6 +19,20 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Domain/Entity/'
             - '../src/Kernel.php'
+            - '../src/Infrastructure/Persistence/Doctrine/Entity/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+
+    App\Domain\Repository\AccountRepositoryInterface:
+        alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineAccountRepository
+
+    App\Domain\Repository\BalanceRepositoryInterface:
+        alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineBalanceRepository
+
+    App\Domain\Repository\BankRepositoryInterface:
+        alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineBankRepository
+
+    App\Domain\Repository\ExchangeRateRepositoryInterface:
+        alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineExchangeRateRepository
+
+    App\Domain\Repository\UserRepositoryInterface:
+        alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository
