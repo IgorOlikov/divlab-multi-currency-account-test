@@ -3,7 +3,7 @@
 namespace App\UI\Controller;
 
 use App\Application\Command\Account\CreateAccountCommand;
-use App\Application\Handler\Account\CreateAccountCommandHandler;
+use App\Application\CommandHandler\Account\CreateAccountCommandHandler;
 use App\Application\Query\Account\GetUserAccountQuery;
 use App\Application\QueryHandler\Account\GetUserAccountQueryHandler;
 use App\UI\Request\AccountRequestDTO;
@@ -19,9 +19,9 @@ class AccountController extends AbstractController
 {
     public function __construct(
         private readonly CreateAccountCommandHandler $createAccountCommandHandler,
-        private readonly CreateAccountCommand $createAccountCommand,
+        //private readonly CreateAccountCommand $createAccountCommand,
         private readonly GetUserAccountQueryHandler $createAccountQueryHandler,
-        private readonly GetUserAccountQuery $accountQuery
+        //private readonly GetUserAccountQuery $accountQuery
 
     ){}
 

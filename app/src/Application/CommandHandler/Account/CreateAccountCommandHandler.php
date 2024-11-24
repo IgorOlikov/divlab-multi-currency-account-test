@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Application\Handler\Account;
+namespace App\Application\CommandHandler\Account;
 
 
 use App\Application\Command\Account\CreateAccountCommand;
 use App\Application\Command\CommandInterface;
-use App\Application\Handler\CommandHandlerInterface;
+use App\Application\CommandHandler\CommandHandlerInterface;
 use App\Application\Service\AccountService;
 
 

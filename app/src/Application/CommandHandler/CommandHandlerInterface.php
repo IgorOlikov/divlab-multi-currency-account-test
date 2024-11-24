@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Application\Handler;
+namespace App\Application\CommandHandler;
 
 use App\Application\Command\CommandInterface;
-
 
 interface CommandHandlerInterface
 {
