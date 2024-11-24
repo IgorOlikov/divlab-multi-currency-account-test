@@ -2,20 +2,11 @@
 
 namespace App\Domain\Entity;
 
-use App\Infrastracture\Persistence\Doctrine\Repository\DoctrineUserRepository;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Types\UuidType;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: DoctrineUserRepository::class)]
-#[ORM\Table(name: '`user`')]
-class User implements UserInterface
+
+class User
 {
-    #[ORM\Id]
-    #[ORM\Column(type: UuidType::NAME, unique: true)]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
-    #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+
     private ?Uuid $id = null;
 
     public function getId(): ?Uuid

@@ -2,8 +2,8 @@
 
 namespace App\Infrastracture\Persistence\Doctrine\Repository;
 
-use App\Domain\Entity\Bank;
-use App\Domain\Entity\User;
+use App\Domain\Entity\DoctrineBank;
+use App\Domain\Entity\DoctrineUser;
 use App\Domain\Repository\UserRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -12,13 +12,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
- * @extends ServiceEntityRepository<User>
+ * @extends ServiceEntityRepository<DoctrineUser>
  */
 class DoctrineUserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, User::class);
+        parent::__construct($registry, DoctrineUser::class);
     }
 
     /**
@@ -26,7 +26,7 @@ class DoctrineUserRepository extends ServiceEntityRepository implements Password
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        if (!$user instanceof User) {
+        if (!$user instanceof DoctrineUser) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
         }
 
@@ -35,19 +35,19 @@ class DoctrineUserRepository extends ServiceEntityRepository implements Password
         $this->getEntityManager()->flush();
     }
 
-    #[\Override] public function save(Bank $account): void
+    #[\Override] public function save(DoctrineBank $account): void
     {
         // TODO: Implement save() method.
     }
 
-    #[\Override] public function findById(int $id): ?Bank
+    #[\Override] public function findById(int $id): ?DoctrineBank
     {
         // TODO: Implement findById() method.
     }
 
 
 //    /**
-//     * @return User[] Returns an array of User objects
+//     * @return DoctrineUser[] Returns an array of DoctrineUser objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -61,7 +61,7 @@ class DoctrineUserRepository extends ServiceEntityRepository implements Password
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?User
+//    public function findOneBySomeField($value): ?DoctrineUser
 //    {
 //        return $this->createQueryBuilder('u')
 //            ->andWhere('u.exampleField = :val')

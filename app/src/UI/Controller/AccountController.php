@@ -9,8 +9,10 @@ use App\Application\QueryHandler\Account\GetUserAccountQueryHandler;
 use App\UI\Request\AccountRequestDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 
 #[Route(path: 'api/v1')]
 class AccountController extends AbstractController
@@ -29,8 +31,10 @@ class AccountController extends AbstractController
         //command get all user accounts
     }
 
-    #[Route(path: '/account/{accountId}', methods: ['GET'])]
-    public function showAccount()
+    #[Route(path: '/account/{accountId}', requirements: ['accountId' => Requirement::UUID], methods: ['GET'])]
+    public function showAccount(
+        string $accountId
+    )
     {
         //command get account by id
     }
@@ -45,11 +49,11 @@ class AccountController extends AbstractController
             new CreateAccountCommand(
                 userId: $this->getUser()->getUserIdentifier(),
                 bankId: $accountRequestDTO->bankId,
-                currencyId: $accountRequestDTO->primeCurrencyId
+                primeCurrencyId: $accountRequestDTO->primeCurrencyId
                 )
             );
 
-        return $this->json(['Account successfully created'], 201);
+        return $this->json(['DoctrineAccount successfully created'], 201);
     }
 
 
