@@ -15,6 +15,7 @@ readonly class CreateAccountCommand implements CommandInterface
         private string $userId,
         private string $bankId,
         private string $primeCurrencyId,
+        private array $currencyIds
     )
     {}
 
@@ -31,6 +32,11 @@ readonly class CreateAccountCommand implements CommandInterface
     public function getPrimeCurrencyId(): string
     {
         return $this->primeCurrencyId;
+    }
+
+    public function getCurrencyIds(): array
+    {
+        return $this->currencyIds;
     }
 
 
