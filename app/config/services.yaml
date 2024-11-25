@@ -25,6 +25,9 @@ services:
     App\Domain\Repository\AccountRepositoryInterface:
         alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineAccountRepository
 
+    App\Domain\Repository\CurrencyRepositoryInterface:
+        alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineCurrencyRepository
+
     App\Domain\Repository\BalanceRepositoryInterface:
         alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineBalanceRepository
 
@@ -36,3 +39,4 @@ services:
 
     App\Domain\Repository\UserRepositoryInterface:
         alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository
+

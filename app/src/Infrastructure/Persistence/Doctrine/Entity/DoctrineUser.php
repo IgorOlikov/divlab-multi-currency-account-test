@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Entity;
 
-use App\Infrastracture\Persistence\Doctrine\Repository\DoctrineUserRepository;
+use App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Security\Core\User\UserInterface;

@@ -2,7 +2,8 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Entity;
 
-use App\Infrastracture\Persistence\Doctrine\Repository\DoctrineAccountRepository;
+
+use App\Infrastructure\Persistence\Doctrine\Repository\DoctrineAccountRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
@@ -16,6 +17,11 @@ class DoctrineAccount
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
     private ?Uuid $id = null;
+
+    private ?DoctrineCurrency $currency = null;
+
+    private ?DoctrineUser $user = null;
+
 
     public function getId(): ?Uuid
     {
