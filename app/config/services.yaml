@@ -22,6 +22,15 @@ services:
             - '../src/Infrastructure/Persistence/Doctrine/Entity/'
 
 
+    App\UI\EventListener\ApplicationExceptionListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.exception', priority: 100 }
+
+    App\UI\EventListener\DomainExceptionListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.exception', priority: 50 }
+
+
     App\Domain\Repository\AccountRepositoryInterface:
         alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineAccountRepository
 
