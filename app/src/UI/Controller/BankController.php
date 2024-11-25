@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route(path: 'api/v1/bank')]
 class BankController extends AbstractController
 {
     public function __construct(
@@ -38,5 +39,22 @@ class BankController extends AbstractController
 
         return $this->json(['Account successfully created'], 201);
     }
+
+    public function createExchangeRate()
+    {
+        // bank id
+        // from currency id
+        // to currency id
+        // exchangeRate
+    }
+
+    public function patchExchangeRate()
+    {
+        //bank id
+        // currency form
+        // currency to
+        // exchange rate
+    }
+
 
 }

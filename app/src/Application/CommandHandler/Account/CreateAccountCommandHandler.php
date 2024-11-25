@@ -7,14 +7,14 @@ use App\Application\Command\Account\CreateAccountCommand;
 use App\Application\Command\CommandInterface;
 use App\Application\CommandHandler\CommandHandlerInterface;
 use App\Application\Service\AccountService;
-
+use App\Application\Service\BankService;
 
 
 readonly class CreateAccountCommandHandler implements CommandHandlerInterface
 {
 
     public function __construct(
-        private AccountService $accountService
+        private BankService $bankService
     )
     {}
 
@@ -25,10 +25,11 @@ readonly class CreateAccountCommandHandler implements CommandHandlerInterface
      */
     public function handle(CommandInterface $command): mixed
     {
-        return $this->accountService->createAccount(
+        return $this->bankService->createAccount(
             $command->getUserId(),
             $command->getBankId(),
             $command->getPrimeCurrencyId(),
+            $command->getCurrencyIds()
         );
     }
 }
