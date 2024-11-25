@@ -25,6 +25,9 @@ readonly class CreateAccountCommandHandler implements CommandHandlerInterface
      */
     public function handle(CommandInterface $command): mixed
     {
+
+
+
         return $this->bankService->createAccount(
             $command->getUserId(),
             $command->getBankId(),

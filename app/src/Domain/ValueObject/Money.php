@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Domain\ValueObject;
+
 use App\Domain\Exception\AmountLessThanZeroDomainException;
 use App\Domain\Exception\IncompatibleCurrenciesDomainException;
 use App\Domain\Exception\InsufficientBalanceDomainException;
@@ -8,9 +10,9 @@ class Money
 {
     private string $amount = '0.00';
 
-    private string $currency;
+    private Currency $currency;
 
-    public function __construct(string $amount, string $currency)
+    public function __construct(string $amount, Currency $currency)
     {
         if (bccomp($amount, '0.00', 2) === -1) {
             throw new AmountLessThanZeroDomainException('Amount cannot be less than 0.00.', 422);
@@ -25,7 +27,7 @@ class Money
         return $this->amount;
     }
 
-    public function getCurrency(): string
+    public function getCurrency(): Currency
     {
         return $this->currency;
     }
