@@ -25,4 +25,7 @@ cache-clear:
 token-pair:
 	docker compose run --rm cli bin/console lexik:jwt:generate-keypair
 
+composer-install:
+	docker compose run --rm cli composer install
+
 
