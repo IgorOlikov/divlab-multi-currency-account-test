@@ -6,7 +6,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser
-                property: email
+                property: id
 
     firewalls:
         dev:

@@ -28,7 +28,7 @@ class DoctrineUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     private string $email;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     #[ORM\Column(type: Types::STRING)]
@@ -52,6 +52,15 @@ class DoctrineUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function getId(): ?Uuid
     {
         return $this->id;
+    }
+
+    public function setId(?string $id): void
+    {
+        if ($id === null) {
+            $this->id = $id;
+        } else {
+            $this->id = Uuid::fromString($id);
+        }
     }
 
     public function getName(): ?string
@@ -132,6 +141,13 @@ class DoctrineUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         //
+    }
+
+    public function addRole(string $role): void
+    {
+        $roles = $this->roles;
+        $roles[] = $role;
+        $this->roles = $roles;
     }
 
     public function getUserIdentifier(): string

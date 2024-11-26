@@ -21,6 +21,9 @@ services:
             - '../src/Kernel.php'
             - '../src/Infrastructure/Persistence/Doctrine/Entity/'
 
+    Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher: ~
+    Symfony\Component\PasswordHasher\PasswordHasherInterface:
+        alias: Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher
 
     App\UI\EventListener\ApplicationExceptionListener:
         tags:

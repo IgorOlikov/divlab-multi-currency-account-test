@@ -7,17 +7,18 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class AccountRequestDTO
 {
-    #[Assert\NotBlank()]
-    #[Assert\Uuid()]
+    #[Assert\NotBlank(groups: ['createAccount'])]
+    #[Assert\Uuid(groups: ['createAccount'])]
     public string $bankId;
 
-    #[Assert\NotBlank()]
-    #[Assert\Uuid()]
+    #[Assert\NotBlank(groups: ['createAccount'])]
+    #[Assert\Uuid(groups: ['createAccount'])]
     public string $primeCurrencyId;
 
-    #[Assert\NotBlank()]
-    #[Assert\Type('array')]
+    #[Assert\NotBlank(groups: ['createAccount'])]
+    #[Assert\Type(type: 'array', groups: ['createAccount'])]
     #[Assert\All(
+        constraints:
         new Assert\Collection([
             'fields' => [
                 'currencyId' => new Assert\Sequentially([
@@ -25,11 +26,12 @@ class AccountRequestDTO
                     new Assert\Uuid()
                 ])
             ]
-        ])
+        ]),
+        groups: ['createAccount']
     )]
     public array $currencyIds;
 
-    #[Assert\Callback]
+    #[Assert\Callback(groups: ['createAccount'])]
     public function validatePrimeCurrencyIdInCurrencyIds(ExecutionContextInterface $context): void
     {
         $currencyIds = array_map(fn ($item) => $item['currencyId'], $this->currencyIds);

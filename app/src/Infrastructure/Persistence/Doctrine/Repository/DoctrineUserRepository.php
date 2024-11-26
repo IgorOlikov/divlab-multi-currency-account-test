@@ -6,6 +6,7 @@ namespace App\Infrastructure\Persistence\Doctrine\Repository;
 use App\Domain\Entity\DomainUser;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
+use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineUserMapper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -36,40 +37,52 @@ class DoctrineUserRepository extends ServiceEntityRepository implements Password
         $this->getEntityManager()->flush();
     }
 
-    #[\Override] public function save(DomainUser $account): void
+    public function saveAndReturn(DomainUser $user): DomainUser
     {
-        // TODO: Implement save() method.
+        $doctrineUser = DoctrineUserMapper::toInfrastructure($user);
+
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->persist($doctrineUser);
+
+        $entityManager->flush();
+
+        return DoctrineUserMapper::toDomain($doctrineUser);
     }
 
-    #[\Override] public function findById(string $id): ?DomainUser
+    public function findById(string $id): ?DomainUser
     {
         // TODO: Implement findById() method.
     }
 
+    public function existsByEmail(string $email): bool
+    {
+        return $this->createQueryBuilder('u')
+                ->select('COUNT(u.id)')
+                ->where('u.email = :email')
+                ->setParameter('email', $email)
+                ->getQuery()
+                ->getSingleScalarResult() > 0;
+    }
 
-//    /**
-//     * @return DoctrineUser[] Returns an array of DoctrineUser objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function existsByName(string $name): bool
+    {
+        return $this->createQueryBuilder('u')
+                ->select('COUNT(u.id)')
+                ->where('u.name = :name')
+                ->setParameter('name', $name)
+                ->getQuery()
+                ->getSingleScalarResult() > 0;
+    }
 
-//    public function findOneBySomeField($value): ?DoctrineUser
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function save(DomainUser $user): void
+    {
+        $doctrineUser = DoctrineUserMapper::toInfrastructure($user);
 
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->persist($doctrineUser);
+
+        $entityManager->flush();
+    }
 }

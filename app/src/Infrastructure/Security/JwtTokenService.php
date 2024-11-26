@@ -2,19 +2,24 @@
 
 namespace App\Infrastructure\Security;
 
+use App\Application\DTO\JwtTokensResult;
+use App\Domain\Entity\DomainUser;
+use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineUserMapper;
+use Gesdinet\JWTRefreshTokenBundle\Generator\RefreshTokenGeneratorInterface;
+use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class JwtTokenService
 {
-    private JWTTokenManagerInterface $jwtManager;
-    private Security $security;
-
-    public function __construct(JWTTokenManagerInterface $jwtManager, Security $security)
+    public function __construct(
+        private JWTTokenManagerInterface $jwtManager,
+        private RefreshTokenGeneratorInterface $refreshTokenGenerator,
+        private Security $security,
+        private RefreshTokenManagerInterface $refreshTokenManager
+    )
     {
-        $this->jwtManager = $jwtManager;
-        $this->security = $security;
     }
 
 
@@ -39,5 +44,18 @@ class JwtTokenService
     public function validate()
     {
         //
+    }
+
+    public function authenticateUser(DomainUser $domainUser): JwtTokensResult
+    {
+        $doctrineUser = DoctrineUserMapper::toInfrastructure($domainUser);
+
+        $refreshToken = $this->refreshTokenGenerator->createForUserWithTtl($doctrineUser, 2592000);
+
+        $this->refreshTokenManager->save($refreshToken);
+
+        $accessToken = $this->jwtManager->create($doctrineUser);
+
+        return new JwtTokensResult($accessToken, (string) $refreshToken);
     }
 }
