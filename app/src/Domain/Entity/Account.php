@@ -144,7 +144,6 @@ class Account
         return $this->balances[$currency->getCode()];
     }
 
-
     /**
      * @param Currency $currency
      * @return void

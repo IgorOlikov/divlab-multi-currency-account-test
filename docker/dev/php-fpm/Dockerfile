@@ -8,6 +8,8 @@ RUN apk add icu-dev
 
 RUN docker-php-ext-configure intl
 
+RUN docker-php-ext-install bcmath
+
 RUN docker-php-ext-install pdo pdo_pgsql pgsql intl
 
 RUN apk add --update linux-headers --no-cache autoconf g++ make \
