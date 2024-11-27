@@ -1,9 +1,7 @@
 <?php
 
-
 namespace App\Domain\Entity;
 
-use App\Domain\Entity\Account;
 use Symfony\Component\Uid\Uuid;
 
 
@@ -44,6 +42,10 @@ class Bank
         $this->exchangeRates = $exchangeRates;
     }
 
+    /**
+     * @param Client $client
+     * @return Account
+     */
     public function createNewAccount(Client $client): Account
     {
         $account = new Account(
@@ -57,14 +59,47 @@ class Bank
         return $account;
     }
 
-
+    /**
+     * @param Account $account
+     * @return void
+     */
     public function addAccount(Account $account): void
     {
-        if (isset($this->balances[$account->__toString()])) {
+        if (isset($this->accounts[$account->getId()])) {
             throw new \RuntimeException('Account already exists');
         }
 
-        $this->accounts[$account->__toString()] = $account;
+        $this->accounts[$account->getId()] = $account;
+    }
+
+    /**
+     * @param Currency $fromCurrency
+     * @param Currency $toCurrency
+     * @param string $rate
+     * @return ExchangeRate
+     */
+    public function createExchangeRate(Currency $fromCurrency, Currency $toCurrency, string $rate): ExchangeRate
+    {
+        return new ExchangeRate($this, $fromCurrency, $toCurrency, $rate);
+    }
+
+    /**
+     * @param ExchangeRate $exchangeRate
+     * @return void
+     */
+    public function addExchangeRate(ExchangeRate $exchangeRate): void
+    {
+        $this->exchangeRates[$exchangeRate->generateExchangeRateCode()] = $exchangeRate;
+    }
+
+    /**
+     * @param Currency $currency
+     * @param Currency $conversionCurrency
+     * @return ExchangeRate
+     */
+    public function getExchangeRate(Currency $currency, Currency $conversionCurrency): ExchangeRate
+    {
+        return $this->exchangeRates[$currency->getCode() .':'. $conversionCurrency->getCode()];
     }
 
     public function getId(): ?string
