@@ -2,7 +2,7 @@
 
 namespace App\Domain\Entity;
 
-use App\Domain\ValueObject\Money;
+use App\Domain\ValueObject\MoneyValueObject;
 use Doctrine\ORM\Mapping as ORM;
 
 class ExchangeRate
@@ -18,11 +18,11 @@ class ExchangeRate
     private string $exchangeRate;
 
     public function __construct(
-        Bank     $bank,
-        Currency $fromCurrency,
-        Currency $toCurrency,
-        Money    $money,
-        string   $id = null
+        Bank             $bank,
+        Currency         $fromCurrency,
+        Currency         $toCurrency,
+        MoneyValueObject $money,
+        string           $id = null
     )
     {
         $this->id = $id;

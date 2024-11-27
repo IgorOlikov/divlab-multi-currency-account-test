@@ -6,11 +6,11 @@ class Currency
 {
     private ?string $id;
 
-    private string $name;
+    private string $code;
 
-    public function __construct(string $currencyName, string $id = null)
+    public function __construct(string $currencyCode, string $id = null)
     {
-        $this->name = $currencyName;
+        $this->code = strtoupper($currencyCode);
         $this->id = $id;
     }
 
@@ -24,19 +24,19 @@ class Currency
         $this->id = $id;
     }
 
-    public function getName(): string
+    public function getCode(): string
     {
-        return $this->name;
+        return $this->code;
     }
 
-    public function setName(string $name): void
+    public function setCode(string $currencyCode): void
     {
-        $this->name = $name;
+        $this->code = strtoupper($currencyCode);
     }
 
     public function __toString(): string
     {
-        return $this->name;
+        return $this->code;
     }
 
 

@@ -4,6 +4,7 @@
 namespace App\Domain\Entity;
 
 use App\Domain\Entity\Account;
+use Symfony\Component\Uid\Uuid;
 
 
 class Bank
@@ -43,9 +44,27 @@ class Bank
         $this->exchangeRates = $exchangeRates;
     }
 
-    public function createNewAccount(): Account
+    public function createNewAccount(Client $client): Account
     {
-        new Account();
+        $account = new Account(
+            client: $client,
+            bank: $this,
+            id: (Uuid::v4())->toString()
+        );
+
+        $this->addAccount($account);
+
+        return $account;
+    }
+
+
+    public function addAccount(Account $account): void
+    {
+        if (isset($this->balances[$account->__toString()])) {
+            throw new \RuntimeException('Account already exists');
+        }
+
+        $this->accounts[$account->__toString()] = $account;
     }
 
     public function getId(): ?string
