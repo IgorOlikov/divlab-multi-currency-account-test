@@ -2,11 +2,12 @@
 
 namespace App\Domain\Entity;
 
-use App\Domain\ValueObject\MoneyValueObject;
-use Doctrine\ORM\Mapping as ORM;
+use App\Domain\Trait\AmountValidator;
 
 class ExchangeRate
 {
+    use AmountValidator;
+
     private ?string $id;
 
     private Bank $bank;
@@ -21,7 +22,7 @@ class ExchangeRate
         Bank             $bank,
         Currency         $fromCurrency,
         Currency         $toCurrency,
-        MoneyValueObject $money,
+        string           $rate,
         string           $id = null
     )
     {
@@ -29,7 +30,12 @@ class ExchangeRate
         $this->bank = $bank;
         $this->fromCurrency = $fromCurrency;
         $this->toCurrency = $toCurrency;
-        $this->exchangeRate = $money->getAmount();
+        $this->exchangeRate = $this->validateAmount($rate);
+    }
+
+    public function generateExchangeRateCode(): string
+    {
+        return $this->fromCurrency->getCode() . ':' . $this->toCurrency->getCode();
     }
 
     public function getId(): ?string
@@ -80,6 +86,14 @@ class ExchangeRate
     public function setExchangeRate(string $exchangeRate): void
     {
         $this->exchangeRate = $exchangeRate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRate(): string
+    {
+        return $this->exchangeRate;
     }
 
 
