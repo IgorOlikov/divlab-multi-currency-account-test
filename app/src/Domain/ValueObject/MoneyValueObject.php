@@ -53,5 +53,10 @@ class MoneyValueObject
         return new self(bcsub($this->amount, $money->getAmount(),2), $this->currency);
     }
 
+    public function mul(MoneyValueObject $money): MoneyValueObject
+    {
+        return new self(bcmul($this->amount, $money->getAmount(), 2), $this->currency);
+    }
+
 
 }
