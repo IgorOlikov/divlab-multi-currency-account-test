@@ -4,6 +4,8 @@ namespace App\Domain\Entity;
 
 use App\Domain\Exception\AlreadyExistsDomainException;
 use App\Domain\Exception\UnsupportedCurrencyDomainException;
+use App\Domain\ValueObject\CurrencyValueObject;
+use App\Domain\ValueObject\MoneyValueObject;
 use InvalidArgumentException;
 
 class Account
@@ -59,7 +61,7 @@ class Account
      * @return void
      *
      */
-    public function addCurrency(Currency $currency): void
+    public function attachCurrency(Currency $currency): void
     {
         $this->checkAccountCurrencyAlreadyExists($currency);
 
@@ -140,6 +142,32 @@ class Account
         $this->checkAccountAndBankSupportsCurrency($currency);
 
         return $this->balances[$currency->getCode()];
+    }
+
+
+    public function detachCurrency(Currency $currency): void
+    {
+        //check balance exists before detach
+    }
+
+
+    /**
+     * Returns Account summary balance amount
+     *
+     * @param Currency|null $currency
+     * @return string
+     */
+    public function getAccountSummaryBalance(Currency $currency = null): string
+    {
+        $conversionCurrency = $currency ?? $this->primaryCurrency;
+
+        $total = new MoneyValueObject('0.00', new CurrencyValueObject($conversionCurrency));
+
+        foreach ($this->balances as $balance) {
+            $total = $total->add($balance->convertToCurrency($conversionCurrency));
+        }
+
+        return $total->getAmount();
     }
 
     /**
@@ -231,7 +259,7 @@ class Account
         if (!empty($currencyArray)) {
              $this->validateCurrenciesArray($currenciesArray);
              foreach ($currenciesArray as $currency) {
-                 $this->addCurrency($currency);
+                 $this->attachCurrency($currency);
              }
         }
     }
