@@ -28,7 +28,8 @@
         "symfony/serializer": "7.1.*",
         "symfony/uid": "7.1.*",
         "symfony/validator": "7.1.*",
-        "symfony/yaml": "7.1.*"
+        "symfony/yaml": "7.1.*",
+      "ext-bcmath": "*"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "^8.2",
