@@ -2,7 +2,6 @@
 
 namespace App\Domain\Entity;
 
-use App\Domain\Enum\ExceptionCode;
 use App\Domain\Exception\AlreadyExistsDomainException;
 use App\Domain\Exception\UnsupportedCurrencyDomainException;
 use InvalidArgumentException;
@@ -230,12 +229,10 @@ class Account
     public function addCurrenciesFromArray(array $currenciesArray): void
     {
         if (!empty($currencyArray)) {
-            foreach ($currenciesArray as $code => $currency) {
-                if (!is_string($code) || !$currency instanceof Currency) {
-                    throw new InvalidArgumentException('Invalid currencies array format');
-                }
-                $this->addCurrency($currency);
-            }
+             $this->validateCurrenciesArray($currenciesArray);
+             foreach ($currenciesArray as $currency) {
+                 $this->addCurrency($currency);
+             }
         }
     }
 
@@ -249,11 +246,35 @@ class Account
     public function addBalancesFromArray(array $balancesArray): void
     {
         if (!empty($balancesArray)) {
-            foreach ($balancesArray as $code => $balance) {
-                if (!is_string($code) || !$balance instanceof Balance) {
-                    throw new InvalidArgumentException('Invalid balances array format');
-                }
+            $this->validateBalancesArray($balancesArray);
+            foreach ($balancesArray as $balance) {
                 $this->addBalance($balance);
+            }
+        }
+    }
+
+    /**
+     * @param array<string, Currency> $currenciesArray
+     * @return void
+     */
+    public function validateCurrenciesArray(array $currenciesArray): void
+    {
+        foreach ($currenciesArray as $currency) {
+            if (!$currency instanceof Currency) {
+                throw new InvalidArgumentException('Invalid currencies array format');
+            }
+        }
+    }
+
+    /**
+     * @param array<string, Balance> $balancesArray
+     * @return void
+     */
+    public function validateBalancesArray(array $balancesArray): void
+    {
+        foreach ($balancesArray as $balance) {
+            if (!$balance instanceof Currency) {
+                throw new InvalidArgumentException('Invalid currencies array format');
             }
         }
     }
