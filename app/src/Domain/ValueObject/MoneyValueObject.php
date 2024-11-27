@@ -2,23 +2,22 @@
 
 namespace App\Domain\ValueObject;
 
-use App\Domain\Exception\AmountLessThanZeroDomainException;
+
 use App\Domain\Exception\IncompatibleCurrenciesDomainException;
 use App\Domain\Exception\InsufficientBalanceDomainException;
+use App\Domain\Trait\AmountValidator;
 
-class Money
+class MoneyValueObject
 {
+    use AmountValidator;
+
     private string $amount = '0.00';
 
-    private Currency $currency;
+    private CurrencyValueObject $currency;
 
-    public function __construct(string $amount, Currency $currency)
+    public function __construct(string $amount, CurrencyValueObject $currency)
     {
-        if (bccomp($amount, '0.00', 2) === -1) {
-            throw new AmountLessThanZeroDomainException('Amount cannot be less than 0.00.', 422);
-        }
-
-        $this->amount = $amount;
+        $this->amount = $this->validateAmount($amount);
         $this->currency = $currency;
     }
 
@@ -27,23 +26,23 @@ class Money
         return $this->amount;
     }
 
-    public function getCurrency(): Currency
+    public function getCurrency(): CurrencyValueObject
     {
         return $this->currency;
     }
 
-    public function add(Money $money): Money
+    public function add(MoneyValueObject $money): MoneyValueObject
     {
-        if ($this->currency !== $money->getCurrency()) {
+        if (!$this->currency->equals($money->getCurrency())) {
             throw new IncompatibleCurrenciesDomainException('Currencies must match.');
         }
 
         return new self(bcadd($this->amount, $money->getAmount(), 2), $this->currency);
     }
 
-    public function subtract(Money $money): Money
+    public function subtract(MoneyValueObject $money): MoneyValueObject
     {
-        if ($this->currency !== $money->getCurrency()) {
+        if (!$this->currency->equals($money->getCurrency())) {
             throw new IncompatibleCurrenciesDomainException('Currencies must match.');
         }
 
