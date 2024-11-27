@@ -145,9 +145,19 @@ class Account
     }
 
 
+    /**
+     * @param Currency $currency
+     * @return void
+     */
     public function detachCurrency(Currency $currency): void
     {
-        //check balance exists before detach
+        $balanceForDelete = $this->getBalanceForOperation($currency);
+
+        $amount = $this->withdraw($currency, $balanceForDelete->getAmount());
+
+        $this->deposit($this->primaryCurrency, $amount);
+
+        unset($this->balances[$balanceForDelete->getBalanceCurrencyCode()]);
     }
 
 
