@@ -54,15 +54,17 @@ class Account
     }
 
     /**
+     * Adds Currency to Account and creates Balance
+     *
      * @param Currency $currency
      * @return void
      *
      */
     public function addCurrency(Currency $currency): void
     {
-        $this->checkCurrencyAlreadyExists($currency);
+        $this->checkAccountCurrencyAlreadyExists($currency);
 
-        $this->checkBankSupportsCurrency($currency);
+        $this->checkAccountBankSupportsCurrency($currency);
 
         $this->currencies[$currency->getCode()] = $currency;
 
@@ -84,7 +86,7 @@ class Account
      */
     public function addBalance(Balance $balance): void
     {
-        $this->checkBalanceAlreadyExists($balance);
+        $this->checkAccountCurrencyBalanceAlreadyExists($balance);
 
         $this->checkAccountAndBankSupportsCurrency($balance->getCurrency());
 
@@ -93,9 +95,7 @@ class Account
 
     public function getBalance(Currency $currency): Balance
     {
-        if (!isset($this->balances[$currency->getCode()])) {
-            throw new UnsupportedCurrencyDomainException("Account Currency {$currency} is not supported", 422);
-        }
+        $this->checkAccountSupportsCurrency($currency);
 
         return $this->balances[$currency->getCode()];
     }
@@ -111,9 +111,7 @@ class Account
      */
     public function deposit(Currency $currency, string $amountToAdd): string
     {
-        $this->checkAccountAndBankSupportsCurrency($currency);
-
-        $balance = $this->balances[$currency->getCode()];
+        $balance = $this->getBalanceForOperation($currency);
 
         return $balance->addAmount($amountToAdd);
     }
@@ -129,9 +127,7 @@ class Account
      */
     public function withdraw(Currency $currency, string $amountToSubtract): string
     {
-        $this->checkAccountAndBankSupportsCurrency($currency);
-
-        $balance = $this->balances[$currency->getCode()];
+        $balance = $this->getBalanceForOperation($currency);
 
         return $balance->subtractAmount($amountToSubtract);
     }
@@ -157,7 +153,7 @@ class Account
     public function checkAccountAndBankSupportsCurrency(Currency $currency): void
     {
         $this->checkAccountSupportsCurrency($currency);
-        $this->checkBankSupportsCurrency($currency);
+        $this->checkAccountBankSupportsCurrency($currency);
     }
 
     /**
@@ -171,7 +167,7 @@ class Account
     {
         $currencyCode = $currency->getCode();
 
-        if (!isset($this->balances[$currencyCode])) {
+        if (!isset($this->currencies[$currencyCode])) {
             throw new UnsupportedCurrencyDomainException("Account Currency {$currencyCode} is not supported");
         }
     }
@@ -183,7 +179,7 @@ class Account
      * @return void
      * @throws UnsupportedCurrencyDomainException
      */
-    public function checkBankSupportsCurrency(Currency $currency): void
+    public function checkAccountBankSupportsCurrency(Currency $currency): void
     {
         $currencyCode = $currency->getCode();
 
@@ -199,7 +195,7 @@ class Account
      * @return void
      * @throws AlreadyExistsDomainException
      */
-    public function checkCurrencyAlreadyExists(Currency $currency): void
+    public function checkAccountCurrencyAlreadyExists(Currency $currency): void
     {
         $currencyCode = $currency->getCode();
 
@@ -215,7 +211,7 @@ class Account
      * @return void
      * @throws AlreadyExistsDomainException
      */
-    public function checkBalanceAlreadyExists(Balance $balance): void
+    public function checkAccountCurrencyBalanceAlreadyExists(Balance $balance): void
     {
         $balanceCurrencyCode = $balance->getBalanceCurrencyCode();
 
