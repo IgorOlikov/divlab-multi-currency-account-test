@@ -3,10 +3,10 @@
 namespace App\Domain\Repository;
 
 
-use App\Domain\Entity\DomainCurrency;
+use App\Domain\Entity\Currency;
 
 interface CurrencyRepositoryInterface
 {
-    public function save(DomainCurrency $account): void;
-    public function findById(string $id): ?DomainCurrency;
+    public function save(Currency $account): void;
+    public function findById(string $id): ?Currency;
 }

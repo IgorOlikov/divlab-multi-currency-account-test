@@ -3,8 +3,8 @@
 namespace App\Infrastructure\Security;
 
 use App\Application\DTO\JwtTokensResult;
-use App\Domain\Entity\DomainUser;
-use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineUserMapper;
+use App\Domain\Entity\Client;
+use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineClientMapper;
 use Gesdinet\JWTRefreshTokenBundle\Generator\RefreshTokenGeneratorInterface;
 use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
@@ -46,9 +46,9 @@ class JwtTokenService
         //
     }
 
-    public function authenticateUser(DomainUser $domainUser): JwtTokensResult
+    public function authenticateUser(Client $domainUser): JwtTokensResult
     {
-        $doctrineUser = DoctrineUserMapper::toInfrastructure($domainUser);
+        $doctrineUser = DoctrineClientMapper::toInfrastructure($domainUser);
 
         $refreshToken = $this->refreshTokenGenerator->createForUserWithTtl($doctrineUser, 2592000);
 

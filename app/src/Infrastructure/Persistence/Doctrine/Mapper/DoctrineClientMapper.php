@@ -2,25 +2,25 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Mapper;
 
-use App\Domain\Entity\DomainUser;
-use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
+use App\Domain\Entity\Client;
+use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineClient;
 
-class DoctrineUserMapper
+class DoctrineClientMapper
 {
-    public static function toDomain(DoctrineUser $doctrineUser): DomainUser
+    public static function toDomain(DoctrineClient $doctrineUser): Client
     {
-        return new DomainUser(
+        return new Client(
             name: $doctrineUser->getName(),
             email: $doctrineUser->getEmail(),
             password: $doctrineUser->getPassword(),
-            roles: $doctrineUser->getRoles(),
-            id: $doctrineUser->getId()
+            id: $doctrineUser->getId(),
+            roles: $doctrineUser->getRoles()
         );
     }
 
-    public static function toInfrastructure(DomainUser $domainUser): DoctrineUser
+    public static function toInfrastructure(Client $domainUser): DoctrineClient
     {
-        $doctrineUser = new DoctrineUser();
+        $doctrineUser = new DoctrineClient();
         $doctrineUser->setId($domainUser->getId());
         $doctrineUser->setRoles($domainUser->getRoles());
         $doctrineUser->setName($domainUser->getName());

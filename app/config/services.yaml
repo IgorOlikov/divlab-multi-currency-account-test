@@ -49,6 +49,6 @@ services:
     App\Domain\Repository\ExchangeRateRepositoryInterface:
         alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineExchangeRateRepository
 
-    App\Domain\Repository\UserRepositoryInterface:
-        alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository
+    App\Domain\Repository\ClientRepositoryInterface:
+        alias: App\Infrastructure\Persistence\Doctrine\Repository\DoctrineClientRepository
 

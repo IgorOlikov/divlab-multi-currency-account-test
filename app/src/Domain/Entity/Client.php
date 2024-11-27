@@ -2,9 +2,7 @@
 
 namespace App\Domain\Entity;
 
-
-
-class DomainUser
+class Client
 {
     private ?string $id;
 
@@ -16,12 +14,16 @@ class DomainUser
 
     private array $roles;
 
+    /* @var Account[] $accounts */
+    private array $accounts;
+
     public function __construct(
         string $name,
         string $email,
         string $password,
+        ?string $id = null,
         array $roles = [],
-        ?string $id = null
+        array $accounts = []
     )
     {
         $this->id = $id;
@@ -29,6 +31,7 @@ class DomainUser
         $this->email = $email;
         $this->password = $password;
         $this->roles = $roles;
+        $this->accounts = $accounts;
     }
 
 
@@ -67,13 +70,20 @@ class DomainUser
         $this->roles = $roles;
     }
 
-    public function eraseCredentials(): void
+    /**
+     * @return array|Account[]
+     */
+    public function getAccounts(): array
     {
-        // TODO: Implement eraseCredentials() method.
+        return $this->accounts;
     }
 
-    public function getUserIdentifier(): string
+    /**
+     * @param Account[] $accounts
+     */
+    public function setAccounts(array $accounts): void
     {
-        // TODO: Implement getUserIdentifier() method.
+        $this->accounts = $accounts;
     }
+
 }

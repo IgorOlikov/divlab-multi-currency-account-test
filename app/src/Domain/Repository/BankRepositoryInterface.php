@@ -3,10 +3,10 @@
 namespace App\Domain\Repository;
 
 
-use App\Domain\Entity\DomainBank;
+use App\Domain\Entity\Bank;
 
 interface BankRepositoryInterface
 {
-    public function save(DomainBank $account): void;
-    public function findById(string $id): ?DomainBank;
+    public function save(Bank $account): void;
+    public function findById(string $id): ?Bank;
 }

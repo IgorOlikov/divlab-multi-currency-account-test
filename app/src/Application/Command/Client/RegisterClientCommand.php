@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Application\Command\User;
+namespace App\Application\Command\Client;
 
 use App\Application\Command\CommandInterface;
 
-readonly class RegisterUserCommand implements CommandInterface
+readonly class RegisterClientCommand implements CommandInterface
 {
     public function __construct(
         private string $name,

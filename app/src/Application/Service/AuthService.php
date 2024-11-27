@@ -3,7 +3,7 @@
 namespace App\Application\Service;
 
 use App\Application\DTO\JwtTokensResult;
-use App\Domain\Entity\DomainUser;
+use App\Domain\Entity\Client;
 use App\Infrastructure\Security\JwtTokenService;
 
 class AuthService
@@ -15,7 +15,7 @@ class AuthService
     {
     }
 
-    public function authenticate(DomainUser $user): JwtTokensResult
+    public function authenticate(Client $user): JwtTokensResult
     {
         return $this->jwtTokenService->authenticateUser($user);
     }

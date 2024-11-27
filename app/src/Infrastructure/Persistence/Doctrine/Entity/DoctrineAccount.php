@@ -26,9 +26,9 @@ class DoctrineAccount
     #[ORM\JoinColumn(name: 'prime_currency_id', referencedColumnName: 'id', unique: false, nullable: false)]
     private ?DoctrineCurrency $primeCurrency = null;
 
-    #[ORM\ManyToOne(targetEntity: DoctrineUser::class, inversedBy: 'accounts')]
+    #[ORM\ManyToOne(targetEntity: DoctrineClient::class, inversedBy: 'accounts')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', unique: false, nullable: false, onDelete: 'CASCADE')]
-    private ?DoctrineUser $user = null;
+    private ?DoctrineClient $client = null;
 
     #[ORM\ManyToOne(targetEntity: DoctrineBank::class, inversedBy: 'accounts')]
     #[ORM\JoinColumn(name: 'bank_id', referencedColumnName: 'id', unique: false, nullable: false)]
@@ -79,14 +79,14 @@ class DoctrineAccount
         $this->bank = $bank;
     }
 
-    public function getUser(): DoctrineUser
+    public function getClient(): DoctrineClient
     {
-        return $this->user;
+        return $this->client;
     }
 
-    public function setUser(?DoctrineUser $user): void
+    public function setClient(?DoctrineClient $client): void
     {
-        $this->user = $user;
+        $this->client = $client;
     }
 
     public function getAccountCurrencies(): ?Collection

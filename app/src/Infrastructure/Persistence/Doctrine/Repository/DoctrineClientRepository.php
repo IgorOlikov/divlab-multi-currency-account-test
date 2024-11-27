@@ -3,10 +3,10 @@
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
 
-use App\Domain\Entity\DomainUser;
-use App\Domain\Repository\UserRepositoryInterface;
-use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineUser;
-use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineUserMapper;
+use App\Domain\Entity\Client;
+use App\Domain\Repository\ClientRepositoryInterface;
+use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineClient;
+use App\Infrastructure\Persistence\Doctrine\Mapper\DoctrineClientMapper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -14,43 +14,43 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
- * @extends ServiceEntityRepository<DoctrineUser>
+ * @extends ServiceEntityRepository<DoctrineClient>
  */
-class DoctrineUserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserRepositoryInterface
+class DoctrineClientRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, ClientRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, DoctrineUser::class);
+        parent::__construct($registry, DoctrineClient::class);
     }
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
-    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+    public function upgradePassword(PasswordAuthenticatedUserInterface $client, string $newHashedPassword): void
     {
-        if (!$user instanceof DoctrineUser) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
+        if (!$client instanceof DoctrineClient) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $client::class));
         }
 
-        $user->setPassword($newHashedPassword);
-        $this->getEntityManager()->persist($user);
+        $client->setPassword($newHashedPassword);
+        $this->getEntityManager()->persist($client);
         $this->getEntityManager()->flush();
     }
 
-    public function saveAndReturn(DomainUser $user): DomainUser
+    public function saveAndReturn(Client $client): Client
     {
-        $doctrineUser = DoctrineUserMapper::toInfrastructure($user);
+        $doctrineClient = DoctrineClientMapper::toInfrastructure($client);
 
         $entityManager = $this->getEntityManager();
 
-        $entityManager->persist($doctrineUser);
+        $entityManager->persist($doctrineClient);
 
         $entityManager->flush();
 
-        return DoctrineUserMapper::toDomain($doctrineUser);
+        return DoctrineClientMapper::toDomain($doctrineClient);
     }
 
-    public function findById(string $id): ?DomainUser
+    public function findById(string $id): ?Client
     {
         // TODO: Implement findById() method.
     }
@@ -75,13 +75,13 @@ class DoctrineUserRepository extends ServiceEntityRepository implements Password
                 ->getSingleScalarResult() > 0;
     }
 
-    public function save(DomainUser $user): void
+    public function save(Client $client): void
     {
-        $doctrineUser = DoctrineUserMapper::toInfrastructure($user);
+        $doctrineClient = DoctrineClientMapper::toInfrastructure($client);
 
         $entityManager = $this->getEntityManager();
 
-        $entityManager->persist($doctrineUser);
+        $entityManager->persist($doctrineClient);
 
         $entityManager->flush();
     }

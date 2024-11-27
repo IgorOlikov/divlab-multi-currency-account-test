@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
-use App\Domain\Entity\DomainAccount;
+use App\Domain\Entity\Account;
 use App\Domain\Repository\AccountRepositoryInterface;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineAccount;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -19,12 +19,12 @@ class DoctrineAccountRepository extends ServiceEntityRepository implements Accou
     }
 
 
-    #[\Override] public function save(DomainAccount $account): void
+    #[\Override] public function save(Account $account): void
     {
         // TODO: Implement save() method.
     }
 
-    #[\Override] public function findById(string $id): ?DomainAccount
+    #[\Override] public function findById(string $id): ?Account
     {
         // TODO: Implement findById() method.
     }

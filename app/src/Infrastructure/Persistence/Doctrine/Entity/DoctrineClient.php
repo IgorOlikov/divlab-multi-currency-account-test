@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Entity;
 
-use App\Infrastructure\Persistence\Doctrine\Repository\DoctrineUserRepository;
+use App\Infrastructure\Persistence\Doctrine\Repository\DoctrineClientRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -12,9 +12,9 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: DoctrineUserRepository::class)]
+#[ORM\Entity(repositoryClass: DoctrineClientRepository::class)]
 #[ORM\Table(name: '`users`')]
-class DoctrineUser implements UserInterface, PasswordAuthenticatedUserInterface
+class DoctrineClient implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
@@ -82,14 +82,14 @@ class DoctrineUser implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->accounts->contains($account)) {
             $this->accounts->add($account);
-            $account->setUser($this);
+            $account->setClient($this);
         }
     }
 
     public function removeAccount(DoctrineAccount $account): void
     {
         if ($this->accounts->removeElement($account)) {
-            $account->setUser(null);
+            $account->setClient(null);
         }
     }
 

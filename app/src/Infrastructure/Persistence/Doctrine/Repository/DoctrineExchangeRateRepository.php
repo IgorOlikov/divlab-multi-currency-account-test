@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
-use App\Domain\Entity\DomainExchangeRate;
+use App\Domain\Entity\ExchangeRate;
 use App\Domain\Repository\ExchangeRateRepositoryInterface;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineExchangeRate;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -18,12 +18,12 @@ class DoctrineExchangeRateRepository extends ServiceEntityRepository implements 
         parent::__construct($registry, DoctrineExchangeRate::class);
     }
 
-    #[\Override] public function save(DomainExchangeRate $account): void
+    #[\Override] public function save(ExchangeRate $account): void
     {
         // TODO: Implement save() method.
     }
 
-    #[\Override] public function findById(string $id): ?DomainExchangeRate
+    #[\Override] public function findById(string $id): ?ExchangeRate
     {
         // TODO: Implement findById() method.
     }

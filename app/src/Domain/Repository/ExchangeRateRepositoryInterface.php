@@ -3,10 +3,10 @@
 namespace App\Domain\Repository;
 
 
-use App\Domain\Entity\DomainExchangeRate;
+use App\Domain\Entity\ExchangeRate;
 
 interface ExchangeRateRepositoryInterface
 {
-    public function save(DomainExchangeRate $account): void;
-    public function findById(string $id): ?DomainExchangeRate;
+    public function save(ExchangeRate $account): void;
+    public function findById(string $id): ?ExchangeRate;
 }

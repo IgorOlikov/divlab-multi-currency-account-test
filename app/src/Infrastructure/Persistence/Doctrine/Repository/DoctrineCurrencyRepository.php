@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Doctrine\Repository;
 
-use App\Domain\Entity\DomainCurrency;
+use App\Domain\Entity\Currency;
 use App\Domain\Repository\CurrencyRepositoryInterface;
 use App\Infrastructure\Persistence\Doctrine\Entity\DoctrineCurrency;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -19,12 +19,12 @@ class DoctrineCurrencyRepository extends ServiceEntityRepository implements Curr
     }
 
 
-    #[\Override] public function save(DomainCurrency $account): void
+    #[\Override] public function save(Currency $account): void
     {
         // TODO: Implement save() method.
     }
 
-    #[\Override] public function findById(string $id): ?DomainCurrency
+    #[\Override] public function findById(string $id): ?Currency
     {
         // TODO: Implement findById() method.
     }

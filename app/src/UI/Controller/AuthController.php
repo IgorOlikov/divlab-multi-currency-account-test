@@ -2,9 +2,9 @@
 
 namespace App\UI\Controller;
 
-use App\Application\Command\User\RegisterUserCommand;
+use App\Application\Command\Client\RegisterClientCommand;
 
-use App\Application\CommandHandler\User\RegisterUserCommandHandler;
+use App\Application\CommandHandler\Client\RegisterClientCommandHandler;
 use App\UI\Request\UserRequestDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -18,21 +18,21 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 class AuthController extends AbstractController
 {
     public function __construct(
-        private readonly RegisterUserCommandHandler $registerUserCommandHandler
+        private readonly RegisterClientCommandHandler $registerClientCommandHandler
     )
     {}
 
     #[Route(path: '/register', methods: ['POST'])]
     public function register(
         #[MapRequestPayload(acceptFormat: 'json' , validationGroups: ['register'])]
-        UserRequestDTO $userRequestDTO
+        UserRequestDTO $clientRequestDTO
     ): Response
     {
-        $jwtTokenResult = $this->registerUserCommandHandler->handle(
-            new RegisterUserCommand(
-                name: $userRequestDTO->name,
-                email: $userRequestDTO->email,
-                password: $userRequestDTO->password
+        $jwtTokenResult = $this->registerClientCommandHandler->handle(
+            new RegisterClientCommand(
+                name: $clientRequestDTO->name,
+                email: $clientRequestDTO->email,
+                password: $clientRequestDTO->password
         ));
 
         $response = $this->json($jwtTokenResult, 201, context: [AbstractNormalizer::GROUPS => ['public']]);
