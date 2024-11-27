@@ -63,6 +63,21 @@ class Balance
         return $this->amount;
     }
 
+    /**
+     * @param Currency $conversionCurrency
+     * @return MoneyValueObject
+     */
+    public function convertToCurrency(Currency $conversionCurrency): MoneyValueObject
+    {
+        $balanceMoney = new MoneyValueObject($this->amount, new CurrencyValueObject($this->currency));
+
+        $exchangeRate = $this->account->getBank()->getExchangeRate($this->currency, $conversionCurrency)->getRate();
+
+        $exchangeRateMoney = new MoneyValueObject($exchangeRate, new CurrencyValueObject($conversionCurrency));
+
+        return $balanceMoney->mul($exchangeRateMoney);
+    }
+
     public function __toString(): string
     {
         return $this->currency->getCode();
@@ -112,6 +127,7 @@ class Balance
     {
         $this->amount = $this->validateAmount($amount);
     }
+
 
 
 }
