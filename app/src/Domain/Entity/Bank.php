@@ -80,7 +80,10 @@ class Bank
      */
     public function createExchangeRate(Currency $fromCurrency, Currency $toCurrency, string $rate): ExchangeRate
     {
-        return new ExchangeRate($this, $fromCurrency, $toCurrency, $rate);
+        $newExchangeRate = new ExchangeRate($this, $fromCurrency, $toCurrency, $rate);
+        $this->addExchangeRate($newExchangeRate);
+
+        return $newExchangeRate;
     }
 
     /**
@@ -100,6 +103,11 @@ class Bank
     public function getExchangeRate(Currency $currency, Currency $conversionCurrency): ExchangeRate
     {
         return $this->exchangeRates[$currency->getCode() .':'. $conversionCurrency->getCode()];
+    }
+
+    public function addCurrency(Currency $currency): void
+    {
+        $this->currencies[$currency->getCode()] = $currency;
     }
 
     public function getId(): ?string
