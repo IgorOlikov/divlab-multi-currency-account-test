@@ -33,9 +33,3 @@ build:
 
 up:
 	docker compose up -d
-
-
-
-
-
-
