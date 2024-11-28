@@ -83,9 +83,10 @@ class ExchangeRate
         return $this->exchangeRate;
     }
 
-    public function setExchangeRate(string $exchangeRate): void
+    public function setRate(string $rate): string
     {
-        $this->exchangeRate = $exchangeRate;
+        $this->exchangeRate = $this->validateAmount($rate);
+        return $this->exchangeRate;
     }
 
     /**
