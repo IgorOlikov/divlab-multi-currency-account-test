@@ -34,7 +34,7 @@ class MoneyValueObject
     public function add(MoneyValueObject $money): MoneyValueObject
     {
         if (!$this->currency->equals($money->getCurrency())) {
-            throw new IncompatibleCurrenciesDomainException('Currencies must match.');
+            throw new IncompatibleCurrenciesDomainException("Currencies must match. {$this->currency->getCode()} !== {$money->getCurrency()->getCode()}");
         }
 
         return new self(bcadd($this->amount, $money->getAmount(), 2), $this->currency);
@@ -55,7 +55,7 @@ class MoneyValueObject
 
     public function mul(MoneyValueObject $money): MoneyValueObject
     {
-        return new self(bcmul($this->amount, $money->getAmount(), 2), $this->currency);
+        return new self(bcmul($this->amount, $money->getAmount(), 2), $money->currency);
     }
 
 

@@ -26,7 +26,7 @@ class Currency
 
     public function getCode(): string
     {
-        return $this->code;
+        return strtoupper($this->code);
     }
 
     public function setCode(string $currencyCode): void
