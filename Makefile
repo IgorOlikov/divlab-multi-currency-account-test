@@ -28,4 +28,14 @@ token-pair:
 composer-install:
 	docker compose run --rm cli composer install
 
+build:
+	docker compose build
+
+up:
+	docker compose up -d
+
+
+
+
+
 

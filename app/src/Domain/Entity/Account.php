@@ -162,7 +162,6 @@ class Account
         unset($this->balances[$balanceForDelete->getBalanceCurrencyCode()]);
     }
 
-
     /**
      * Returns Account summary balance amount
      *
