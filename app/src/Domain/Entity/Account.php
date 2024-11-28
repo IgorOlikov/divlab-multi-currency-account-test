@@ -152,10 +152,13 @@ class Account
     {
         $balanceForDelete = $this->getBalanceForOperation($currency);
 
-        $amount = $this->withdraw($currency, $balanceForDelete->getAmount());
+        $amountInPrimaryCurrency = $balanceForDelete->convertToCurrency($this->primaryCurrency)->getAmount();
 
-        $this->deposit($this->primaryCurrency, $amount);
+        $this->withdraw($currency, $balanceForDelete->getAmount());
 
+        $this->deposit($this->primaryCurrency, $amountInPrimaryCurrency);
+
+        unset($this->currencies[$currency->getCode()]);
         unset($this->balances[$balanceForDelete->getBalanceCurrencyCode()]);
     }
 
