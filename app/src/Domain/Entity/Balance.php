@@ -71,9 +71,16 @@ class Balance
     {
         $balanceMoney = new MoneyValueObject($this->amount, new CurrencyValueObject($this->currency));
 
-        $exchangeRate = $this->account->getBank()->getExchangeRate($this->currency, $conversionCurrency)->getRate();
+        if ($this->currency->getCode() === $conversionCurrency->getCode()) {
+            $amountRate = '1.00';
 
-        $exchangeRateMoney = new MoneyValueObject($exchangeRate, new CurrencyValueObject($conversionCurrency));
+        } else {
+            $exchangeRate = $this->account->getBank()->getExchangeRate($this->currency, $conversionCurrency);
+
+        $amountRate = $exchangeRate->getRate();
+        }
+
+        $exchangeRateMoney = new MoneyValueObject($amountRate, new CurrencyValueObject($conversionCurrency));
 
         return $balanceMoney->mul($exchangeRateMoney);
     }
